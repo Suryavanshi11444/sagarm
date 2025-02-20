@@ -1,50 +1,28 @@
-import { useEffect, useState } from "react";
-import Timer from "./Timer";
-
-const Question = ({ question, index, onAnswer, selectedAnswer, isLocked, onNext, onPrev }) => {
-  const [selectedOption, setSelectedOption] = useState(selectedAnswer || null);
-
-  useEffect(() => {
-    setSelectedOption(selectedAnswer);
-  }, [selectedAnswer]);
-
-  const handleSelect = (option) => {
-    if (!isLocked) setSelectedOption(option);
-  };
-
-  const handleSubmit = () => {
-    if (!isLocked) onAnswer(selectedOption);
-  };
-
+const Question = ({ question, onAnswerSelect, selectedAnswer, isLocked, isQuizCompleted }) => {
   return (
-    <div className="container">
-      <h2>Question {index + 1}</h2>
-      <p className="question-text">{question.question}</p>
+    <div>
+      <h3>{question.text}</h3>
 
-      {/* Rendering Options with Styled Buttons */}
-      {question.options.map((option, idx) => (
-        <div key={idx} className="option">
+      {!isQuizCompleted &&
+        question.options.map((option, index) => (
           <button
-            className={selectedOption === option ? "selected" : ""}
-            onClick={() => handleSelect(option)}
+            key={index}
+            onClick={() => onAnswerSelect(option)}
             disabled={isLocked}
+            className={selectedAnswer === option ? "selected" : ""}
           >
             {option}
           </button>
+        ))}
+
+      {isLocked && !isQuizCompleted && (
+        <div className="answer-info">
+          <p>✅ Correct Answer: {question.answer}</p>
+          {selectedAnswer !== question.answer && (
+            <p>❌ Your Answer: {selectedAnswer}</p>
+          )}
         </div>
-      ))}
-
-      {/* Submit and Navigation Buttons */}
-      <button className="submit" onClick={handleSubmit} disabled={isLocked}>Submit</button>
-
-      {isLocked && (
-        <>
-          <p>{selectedAnswer === question.answer ? "✅ Correct" : `❌ Wrong! Correct: ${question.answer}`}</p>
-          <button className="next" onClick={onNext}>Next</button>
-        </>
       )}
-
-      {index > 0 && <button className="prev" onClick={onPrev}>Previous</button>}
     </div>
   );
 };

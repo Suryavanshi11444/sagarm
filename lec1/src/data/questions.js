@@ -1,82 +1,64 @@
 const questions = [
-    {
-      id: 1,
-      question: "Which planet is known as the Red Planet?",
-      options: ["Earth", "Venus", "Mars", "Jupiter"],
-      answer: "Mars",
-    },
-    {
-      id: 2,
-      question: "Who wrote 'Hamlet'?",
-      options: ["Charles Dickens", "William Shakespeare", "Mark Twain", "Leo Tolstoy"],
-      answer: "William Shakespeare",
-    },
-    {
-      id: 3,
-      question: "What is the square root of 144?",
-      options: ["10", "12", "14", "16"],
-      answer: "12",
-    },
-    {
-      id: 4,
-      question: "Which gas do plants absorb during photosynthesis?",
-      options: ["Oxygen", "Carbon Dioxide", "Nitrogen", "Hydrogen"],
-      answer: "Carbon Dioxide",
-    },
-    {
-      id: 5,
-      question: "Who discovered gravity?",
-      options: ["Albert Einstein", "Isaac Newton", "Galileo Galilei", "Nikola Tesla"],
-      answer: "Isaac Newton",
-    },
-    {
-      id: 6,
-      question: "What is the capital of Japan?",
-      options: ["Beijing", "Seoul", "Bangkok", "Tokyo"],
-      answer: "Tokyo",
-    },
-    {
-      id: 7,
-      question: "Which element has the chemical symbol 'O'?",
-      options: ["Oxygen", "Osmium", "Gold", "Oganesson"],
-      answer: "Oxygen",
-    },
-    {
-      id: 8,
-      question: "Which programming language is primarily used for iOS app development?",
-      options: ["Swift", "Java", "C#", "Python"],
-      answer: "Swift",
-    },
-    {
-      id: 9,
-      question: "Which country won the FIFA World Cup in 2018?",
-      options: ["Germany", "Brazil", "France", "Argentina"],
-      answer: "France",
-    },
-    {
-      id: 10,
-      question: "What is the freezing point of water in Celsius?",
-      options: ["-10°C", "0°C", "10°C", "100°C"],
-      answer: "0°C",
-    },
-    {
-      id: 11,
-      question: "Which continent has the most countries?",
-      options: ["Europe", "Asia", "Africa", "South America"],
-      answer: "Africa",
-    },
-    {
-      id: 12,
-      question: "What does CPU stand for?",
-      options: ["Central Processing Unit", "Computer Personal Unit", "Control Processing Unit", "Central Personal Unit"],
-      answer: "Central Processing Unit",
-    },
-    {
-      id: 13,
-      question: "Who developed the theory of relativity?",
-      options: ["Isaac Newton", "Albert Einstein", "Stephen Hawking", "Marie Curie"],
-      answer: "Albert Einstein",
-    }
+  {
+    text: "What is the capital of France?",
+    options: ["Berlin", "Madrid", "Paris", "Lisbon"],
+    answer: "Paris"
+  },
+  {
+    text: "Which planet is known as the Red Planet?",
+    options: ["Earth", "Mars", "Jupiter", "Venus"],
+    answer: "Mars"
+  },
+  {
+    text: "What is the square root of 64?",
+    options: ["6", "7", "8", "9"],
+    answer: "8"
+  },
+  {
+    text: "Who wrote 'Hamlet'?",
+    options: ["Charles Dickens", "William Shakespeare", "Jane Austen", "Leo Tolstoy"],
+    answer: "William Shakespeare"
+  },
+  {
+    text: "What is the largest ocean on Earth?",
+    options: ["Atlantic Ocean", "Indian Ocean", "Arctic Ocean", "Pacific Ocean"],
+    answer: "Pacific Ocean"
+  },
+  {
+    text: "Which gas do plants absorb from the atmosphere?",
+    options: ["Oxygen", "Carbon Dioxide", "Nitrogen", "Hydrogen"],
+    answer: "Carbon Dioxide"
+  },
+  {
+    text: "What is the capital city of Japan?",
+    options: ["Beijing", "Seoul", "Bangkok", "Tokyo"],
+    answer: "Tokyo"
+  },
+  {
+    text: "Which element has the chemical symbol 'O'?",
+    options: ["Oxygen", "Gold", "Osmium", "Ozone"],
+    answer: "Oxygen"
+  },
+  {
+    text: "How many continents are there on Earth?",
+    options: ["5", "6", "7", "8"],
+    answer: "7"
+  },
+  {
+    text: "Who painted the Mona Lisa?",
+    options: ["Vincent van Gogh", "Pablo Picasso", "Leonardo da Vinci", "Claude Monet"],
+    answer: "Leonardo da Vinci"
+  },
+  {
+    text: "What is the boiling point of water in Celsius?",
+    options: ["90°C", "100°C", "110°C", "120°C"],
+    answer: "100°C"
+  },
+  {
+    text: "Which country is famous for inventing pizza?",
+    options: ["France", "Spain", "Italy", "Greece"],
+    answer: "Italy"
+  }
 ];
 
 export default questions;

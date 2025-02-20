@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Question from "./Question";
+import ResultPage from "./ResultPage"; // Import the new result page
 import questions from "../data/questions";
-import Timer from "./Timer";
 
 const Quiz = () => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -9,55 +9,55 @@ const Quiz = () => {
   const [locked, setLocked] = useState(Array(questions.length).fill(false));
   const [score, setScore] = useState(0);
   const [quizCompleted, setQuizCompleted] = useState(false);
-  const [globalTime, setGlobalTime] = useState(600); // 10 minutes
   const [questionTime, setQuestionTime] = useState(15); // 15 seconds per question
+  const [showResultPage, setShowResultPage] = useState(false); // For result page display
 
-  // Global timer (10 minutes)
-  useEffect(() => {
-    if (globalTime === 0) {
-      setQuizCompleted(true);
-      return;
-    }
-    const globalTimer = setInterval(() => setGlobalTime((prev) => prev - 1), 1000);
-    return () => clearInterval(globalTimer);
-  }, [globalTime]);
-
-  // Question timer (15 seconds per question)
   useEffect(() => {
     if (questionTime === 0 && !locked[currentQuestion]) {
       autoSaveAnswer();
       return;
     }
-    const questionTimer = setInterval(() => setQuestionTime((prev) => prev - 1), 1000);
-    return () => clearInterval(questionTimer);
+    const timer = setInterval(() => setQuestionTime((prev) => prev - 1), 1000);
+    return () => clearInterval(timer);
   }, [questionTime]);
 
   // Auto-save selected answer when 15 seconds expire
   const autoSaveAnswer = () => {
-    const newLocked = [...locked];
-    newLocked[currentQuestion] = true;
-    setLocked(newLocked);
-    handleNext();
+    setLocked((prev) => {
+      const newLocked = [...prev];
+      newLocked[currentQuestion] = true;
+      return newLocked;
+    });
+    setShowResultPage(true); // Show the result page instead of options
   };
 
-  const handleAnswer = (selectedOption) => {
-    const newAnswers = [...answers];
-    newAnswers[currentQuestion] = selectedOption;
-    setAnswers(newAnswers);
+  const handleAnswerSelect = (selectedOption) => {
+    if (!locked[currentQuestion]) {
+      setAnswers((prev) => {
+        const newAnswers = [...prev];
+        newAnswers[currentQuestion] = selectedOption;
+        return newAnswers;
+      });
 
-    const newLocked = [...locked];
-    newLocked[currentQuestion] = true;
-    setLocked(newLocked);
+      setLocked((prev) => {
+        const newLocked = [...prev];
+        newLocked[currentQuestion] = true;
+        return newLocked;
+      });
 
-    if (selectedOption === questions[currentQuestion].answer) {
-      setScore(score + 4);
+      if (selectedOption === questions[currentQuestion].answer) {
+        setScore((prev) => prev + 4);
+      }
+
+      setShowResultPage(true); // Show the result page after answering
     }
   };
 
   const handleNext = () => {
     if (currentQuestion < questions.length - 1) {
       setCurrentQuestion(currentQuestion + 1);
-      setQuestionTime(15); // Reset 15-sec timer for next question
+      setQuestionTime(15); // Reset timer
+      setShowResultPage(false);
     } else {
       setQuizCompleted(true);
     }
@@ -66,6 +66,7 @@ const Quiz = () => {
   const handlePrev = () => {
     if (currentQuestion > 0) {
       setCurrentQuestion(currentQuestion - 1);
+      setShowResultPage(false);
     }
   };
 
@@ -74,18 +75,30 @@ const Quiz = () => {
       {!quizCompleted ? (
         <div className="container">
           <h2>Quiz App</h2>
-          <p>Time Left: {Math.floor(globalTime / 60)}:{(globalTime % 60).toString().padStart(2, '0')}, Question Timer: {questionTime}s</p>
-          
-          
-          <Question 
-            question={questions[currentQuestion]} 
-            index={currentQuestion} 
-            onAnswer={handleAnswer}
-            selectedAnswer={answers[currentQuestion]}
-            isLocked={locked[currentQuestion]}
-            onNext={handleNext}
-            onPrev={handlePrev}
-          />
+          <p>Time Left for Question: {questionTime}s</p>
+
+          {!showResultPage ? (
+            <Question 
+              question={questions[currentQuestion]} 
+              onAnswerSelect={handleAnswerSelect} 
+              selectedAnswer={answers[currentQuestion]}
+              isLocked={locked[currentQuestion]}
+            />
+          ) : (
+            <ResultPage 
+              question={questions[currentQuestion]} 
+              selectedAnswer={answers[currentQuestion]} 
+            />
+          )}
+
+          <div className="button-container">
+            {currentQuestion > 0 && <button onClick={handlePrev}>Previous</button>}
+            {showResultPage ? (
+              <button onClick={handleNext}>Next</button>
+            ) : (
+              <button onClick={autoSaveAnswer}>Submit</button>
+            )}
+          </div>
         </div>
       ) : (
         <div className="score-container">
